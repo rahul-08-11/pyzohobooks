@@ -4,26 +4,25 @@ import os
 import json
 
 
-
 class TokenManager:
     _token = None
     _expiry = None
 
-    def __init__(self, domain_name) ->  None:
-        self.domain_url =  self._get_domain_url(domain_name.lower())
-        self.refresh_token = None
-        self.client_id = None
-        self.client_secret = None
-        self.grant_type = ""
+    def __init__(self, domain_name : str, refresh_token : str, client_id : str, client_secret : str, grant_type : str) -> None:
+        self.domain_url = self._get_domain_url(domain_name.lower())
+        self.refresh_token = refresh_token
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.grant_type = grant_type
 
-    def _get_domain_url(self,domain_name) -> str:
+    def _get_domain_url(self, domain_name) -> str:
         zoho_urls = {
             "united states": "https://accounts.zoho.com/",
             "europe": "https://accounts.zoho.eu/",
             "india": "https://accounts.zoho.in/",
             "australia": "https://accounts.zoho.com.au/",
             "japan": "https://accounts.zoho.jp/",
-            "canada": "https://accounts.zohocloud.ca/"
+            "canada": "https://accounts.zohocloud.ca/",
         }
         return zoho_urls[domain_name]
 
@@ -33,9 +32,16 @@ class TokenManager:
             pass
 
         else:
-            with open("token.json","w") as f:
+            with open("token.json", "w") as f:
                 self._refresh_token()
-                f.write(json.dumps({"token": self._token, "expiry": self._expiry.strftime("%Y-%m-%d %H:%M:%S")}))
+                f.write(
+                    json.dumps(
+                        {
+                            "token": self._token,
+                            "expiry": self._expiry.strftime("%Y-%m-%d %H:%M:%S"),
+                        }
+                    )
+                )
 
         if self._token is None or self._is_token_expired():
             self._refresh_token()
