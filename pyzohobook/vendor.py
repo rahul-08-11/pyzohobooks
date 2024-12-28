@@ -3,6 +3,7 @@
 from .utils import *
 import json
 import requests
+from urllib.parse import urlencode
 
 # Fetch vendor details
 def search_vendor(
@@ -21,7 +22,7 @@ def search_vendor(
     # Encode search parameters into the query string
     query_string = urlencode(search_params)
     vendor_response = requests.get(
-        f"https://www.zohoapis.ca/books/v3/vendors?organization_id={organization_id}&vendor_name={vendor_name}",
+        f"https://www.zohoapis.ca/books/v3/vendors?organization_id={organization_id}&{query_string}",
         headers=get_book_headers(book_token=book_token),
     )
     return vendor_response  
