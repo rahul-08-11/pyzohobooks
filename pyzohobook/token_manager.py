@@ -52,7 +52,7 @@ class TokenManager:
         }
         return zoho_urls[domain_name]
 
-    def _get_access_token(self) -> str:
+    def get_access_token(self) -> str:
         # store at project level
         if os.path.exists("token.json"):
             pass
@@ -80,7 +80,7 @@ class TokenManager:
     def _refresh_token(self) -> None:
         # Call the Zoho API to refresh the token
         url = f"{self.domain_url}oauth/v2/token"
-        print(url)
+     
         ## prepare the parameters
         params = {
             "refresh_token": self.refresh_token,
@@ -90,10 +90,8 @@ class TokenManager:
         }
         ## send post request
         response = requests.post(url, params=params)
-        print(response.json())
         if response.status_code == 200:
             self._expiry = datetime.now() + timedelta(minutes=50)  # Update expiry time
-            print("expirey time is set", self._expiry)
             self._token = response.json()["access_token"]
 
 
