@@ -1,10 +1,34 @@
-from datetime import datetime, timedelta
-import requests
-import os
 import json
+import requests
+from datetime import datetime, timedelta
+import os
 
 
 class TokenManager:
+    """
+    A class for managing Zoho Books API tokens.
+
+    Attributes:
+        _token (str): The current access token.
+        _expiry (datetime): The expiration time of the current access token.
+
+    Methods:
+        _refresh_token(): Refreshes the access token by calling the Zoho API.
+
+        _is_token_expired(): Checks if the current access token is expired.
+
+        _get_access_token(): Retrieves the current access token.
+
+        _get_domain_url(): Retrieves the domain URL based on the domain name.
+
+    Instance Variables:
+        domain_url (str): The base URL for the Zoho Books API.
+        refresh_token (str): The refresh token for the Zoho Books API.
+        client_id (str): The client ID for the Zoho Books API.
+        client_secret (str): The client secret for the Zoho Books API.
+        grant_type (str): The grant type for the Zoho Books API.
+
+    """
     _token = None
     _expiry = None
 
@@ -71,4 +95,3 @@ class TokenManager:
             self._token = response.json()["access_token"]
 
 
-TokenManager("Canada")._get_access_token()
