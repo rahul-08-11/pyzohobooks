@@ -1,5 +1,5 @@
 #pyzohobook/item.py
-from utils import *
+from .utils import *
 import json
 import requests
 

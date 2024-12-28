@@ -1,5 +1,5 @@
 #pyzohobook/bill.py
-from utils import get_book_headers
+from .utils import *
 import requests
 import json 
 

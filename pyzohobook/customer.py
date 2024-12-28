@@ -1,5 +1,5 @@
 #pyzohobook/customer.py
-from utils import get_book_headers
+from .utils import *
 import requests
 import json 
 from urllib.parse import urlencode
