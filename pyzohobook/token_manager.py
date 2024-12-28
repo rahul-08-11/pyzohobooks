@@ -34,12 +34,13 @@ class TokenManager:
     _token = None
     _expiry = None
 
-    def __init__(self, domain_name : str, refresh_token : str, client_id : str, client_secret : str, grant_type : str) -> None:
+    def __init__(self, domain_name : str, refresh_token : str, client_id : str, client_secret : str, grant_type : str, token_path : str = "token.json") -> None:
         self.domain_url = self._get_domain_url(domain_name.lower())
         self.refresh_token = refresh_token
         self.client_id = client_id
         self.client_secret = client_secret
         self.grant_type = grant_type
+        self.token_path = token_path
 
     def _get_domain_url(self, domain_name) -> str:
         zoho_urls = {
@@ -54,11 +55,11 @@ class TokenManager:
 
     def get_access_token(self) -> str:
         # store at project level
-        if os.path.exists("token.json"):
+        if os.path.exists(self.token_path):
             pass
 
         else:
-            with open("token.json", "w") as f:
+            with open(self.token_path, "w") as f:
                 self._refresh_token()
                 f.write(
                     json.dumps(
