@@ -1,5 +1,8 @@
 #pyzohobook/bill.py
-from utils import *
+from utils import get_book_headers
+import requests
+import json 
+
 
 # Create a bill in Zoho Books
 def create_bill(

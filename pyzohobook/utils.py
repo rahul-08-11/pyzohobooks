@@ -1,7 +1,4 @@
 # utils.py
-import requests
-import json
-from urllib.parse import urlencode
 
 
 def get_book_headers(book_token: str) -> dict:

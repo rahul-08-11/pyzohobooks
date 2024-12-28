@@ -1,5 +1,8 @@
-from utils import *
-
+#pyzohobook/customer.py
+from utils import get_book_headers
+import requests
+import json 
+from urllib.parse import urlencode
 
 def search_customer(
     search_params: dict, book_token: str, organization_id: str
