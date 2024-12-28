@@ -34,13 +34,13 @@ class TokenManager:
     _token = None
     _expiry = None
 
-    def __init__(self, domain_name : str, refresh_token : str, client_id : str, client_secret : str, grant_type : str, token_path : str = "token.json") -> None:
+    def __init__(self, domain_name : str, refresh_token : str, client_id : str, client_secret : str, grant_type : str, token_dir : str = "./", token_filename : str = "token.json") -> None:
         self.domain_url = self._get_domain_url(domain_name.lower())
         self.refresh_token = refresh_token
         self.client_id = client_id
         self.client_secret = client_secret
         self.grant_type = grant_type
-        self.token_path = token_path
+        self.token_path = os.path.join(token_dir, token_filename)
 
     def _get_domain_url(self, domain_name) -> str:
         zoho_urls = {
