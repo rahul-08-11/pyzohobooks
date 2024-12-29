@@ -2,6 +2,8 @@
 from .utils import *
 import json
 import requests
+from urllib.parse import urlencode
+
 
 def create_invoice(
     invoice_data: dict, book_token: str, organization_id: str
@@ -12,7 +14,6 @@ def create_invoice(
         data=json.dumps(invoice_data),
     )
     return response
-
 
 def update_invoice(
     invoice_id: str, invoice_data: dict, book_token: str, organization_id: str
@@ -26,13 +27,25 @@ def update_invoice(
 
     return response
 
-
 def delete_invoice(
     invoice_id: str, book_token: str, organization_id: str
 ) -> requests.Response:
 
     response = requests.delete(
         f"https://www.zohoapis.ca/books/v3/invoices/{invoice_id}?organization_id={organization_id}",
+        headers=get_book_headers(book_token=book_token),
+    )
+
+    return response
+
+def search_invoice(
+    search_params: dict, book_token: str, organization_id: str
+) -> requests.Response:
+    
+    # Encode search parameters into the query string
+    query_string = urlencode(search_params)
+    response = requests.get(
+        f"https://www.zohoapis.ca/books/v3/invoices?organization_id={organization_id}&{query_string}",
         headers=get_book_headers(book_token=book_token),
     )
 
