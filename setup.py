@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pyzoho-books",
-    version="0.1.3",
+    version="0.1.3.5",
     description="A Python package for interacting with the Zoho Books API.",
     author="Rahul Kumar",
     author_email="rahul.work.programming@gmail.com",

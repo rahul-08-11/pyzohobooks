@@ -1,5 +1,5 @@
+#pyzohobook/config.py
 import os
-
 
 class Config:
     """
@@ -34,44 +34,33 @@ class Config:
             cls._instance = super(Config, cls).__new__(cls)
         return cls._instance
 
-    def __init__(
-        self,
-        domain_url: str = None,
-        auth_url: str = None,
-        refresh_token: str = None,
-        client_id: str = None,
-        client_secret: str = None,
-        grant_type: str = None,
-        organization_id: str = None,
-        token_dir: str = "./",
-        token_filename: str = "token.json",
-    ) -> None:
+    def __init__(self) -> None:
         """
-        Initializes the Config instance with provided or default configuration values.
+        Initializes the Config instance with environment variable values.
 
-        Args:
-            domain_url (str, optional): The base URL of the API domain. Defaults to None.
-            auth_url (str, optional): The URL for authentication requests. Defaults to None.
-            refresh_token (str, optional): The refresh token for OAuth2 authentication. Defaults to None.
-            client_id (str, optional): The client ID for OAuth2 authentication. Defaults to None.
-            client_secret (str, optional): The client secret for OAuth2 authentication. Defaults to None.
-            grant_type (str, optional): The grant type for OAuth2 authentication. Defaults to None.
-            organization_id (str, optional): The ID of the organization. Defaults to None.
-            token_dir (str, optional): The directory where the token file is stored. Defaults to "./".
-            token_filename (str, optional): The name of the token file. Defaults to "token.json".
+        Uses the following environment variables:
+            - ZOHO_DOMAIN_URL
+            - ZOHO_AUTH_URL
+            - ZOHO_REFRESH_TOKEN
+            - ZOHO_CLIENT_ID
+            - ZOHO_CLIENT_SECRET
+            - ZOHO_GRANT_TYPE
+            - ZOHO_ORG_ID
+            - ZOHO_TOKEN_DIR
+            - ZOHO_TOKEN_FILENAME
         """
         if not hasattr(self, "initialized"):  # Ensure initialization only happens once
-            self.domain_url = domain_url
-            self.auth_url = auth_url
-            self.refresh_token = refresh_token
-            self.client_id = client_id
-            self.client_secret = client_secret
-            self.grant_type = grant_type
-            self.organization_id = organization_id
-            self.token_dir = token_dir
-            self.token_filename = token_filename
-            self.token_path = os.path.join(token_dir, token_filename)
-            self.initialized = True  # Marks the instance as initialized
+            self.domain_url = os.getenv("ZOHO_DOMAIN_URL", "https://www.zohoapis.com")
+            self.auth_url = os.getenv("ZOHO_AUTH_URL", "https://accounts.zoho.com")
+            self.refresh_token = os.getenv("ZOHO_REFRESH_TOKEN")
+            self.client_id = os.getenv("ZOHO_CLIENT_ID")
+            self.client_secret = os.getenv("ZOHO_CLIENT_SECRET")
+            self.grant_type = os.getenv("ZOHO_GRANT_TYPE")
+            self.organization_id = os.getenv("ZOHO_ORG_ID")
+            self.token_dir = os.getenv("ZOHO_TOKEN_DIR", "./")
+            self.token_filename = os.getenv("ZOHO_TOKEN_FILENAME", "token.json")
+            self.initialized = True  # Mark as initialized
+            self.token_path = os.path.join(self.token_dir, self.token_filename)
 
     def __getattr__(self, name):
         """
