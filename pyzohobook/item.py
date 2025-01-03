@@ -16,7 +16,7 @@ class Item:
 
     @classmethod
     def create_item(
-        cls, item_data: dict, book_token: str, organization_id: str
+        cls, item_data: dict, book_token: str
     ) -> requests.Response:
         """
         Creates a new item.
@@ -60,7 +60,7 @@ class Item:
 
     @classmethod
     def search_item(
-        cls, item_name: dict, book_token: str, organization_id: str
+        cls, item_name: dict, book_token: str
     ) -> requests.Response:
         """
         Searches for an item by name.
@@ -81,7 +81,7 @@ class Item:
 
     @classmethod
     def delete_item(
-        cls, item_id: str, book_token: str, organization_id: str
+        cls, item_id: str, book_token: str
     ) -> requests.Response:
         """
         Deletes an item.

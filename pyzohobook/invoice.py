@@ -71,7 +71,7 @@ class Invoice:
 
     @classmethod
     def delete_invoice(
-        cls, invoice_id: str, book_token: str, organization_id: str
+        cls, invoice_id: str, book_token: str
     ) -> requests.Response:
         """
         Deletes an invoice in Zoho Books.

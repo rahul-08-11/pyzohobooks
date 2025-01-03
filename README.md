@@ -1,13 +1,15 @@
-# PyZohoBooks
+# PyZohoBooks 🚀
 
-PyZohoBooks is a Python library designed to simplify interactions with Zoho Books APIs. It provides a streamlined way to handle token refresh operations and offers easy-to-use functions for making API calls, avoiding the complexities and lengthiness of Zoho's official API documentation.
+PyZohoBooks is a Python wrapper for interacting with Zoho Books APIs, simplifying the process of token management and making it easier to work with various endpoints for managing Zoho Books entities such as customers, vendors, bills, invoices, and items.
+
+The library abstracts away the complexities of interacting with Zoho Books APIs by providing a simple and intuitive interface.
 
 ## Features
 
 - **Token Management:** Automatically refresh Zoho API tokens when expired.
-- **Simplified API Calls:** Easy-to-use functions for common operations such as handling customers, vendors, bills, invoices, and items.
-- **Modular Design:** Organized modules for different aspects of Zoho Books (e.g., customers, vendors, bills).
-- **Lightweight:** Minimal dependencies for ease of installation and usage.
+- **Simplified API Calls:** Easy-to-use functions to interact with customers, vendors, bills, invoices, items, and other Zoho Books resources.
+- **Modular Design:** Separate modules for different aspects of Zoho Books (e.g., customers, vendors, bills, invoices).
+- **Lightweight:**  Minimal dependencies for quick installation and use.
 
 ---
 ## Installation
@@ -19,91 +21,132 @@ pip install git+https://github.com/rahul-08-11/pyzohobooks.git
 ```
 
 
-### Example Operations
+### Setup Configuration ⚡🔑
 
-#### Create a Record
-```python
-response = api.create_record(moduleName="Leads", data={"Company": "Acme Corp", "Last_Name": "Doe"}, token="your_access_token")
-print(response.json())
+Create a .env file in your project directory
+
+```bash
+touch .env
 ```
 
-#### Read Records
-```python
-response = api.read_record(moduleName="Leads", token="your_access_token")
-print(response.json())
+Add the following environment variables to the .env file, replacing placeholders with your actual Zoho API credentials:
+```bash
+ZOHO_DOMAIN_URL=https://www.zohoapis.com
+ZOHO_AUTH_URL=https://accounts.zoho.com
+ZOHO_REFRESH_TOKEN=your-refresh-token
+ZOHO_CLIENT_ID=your-client-id
+ZOHO_CLIENT_SECRET=your-client-secret
+ZOHO_GRANT_TYPE=refresh_token
+ZOHO_ORG_ID=your-organization-id
+ZOHO_TOKEN_DIR=./
+ZOHO_TOKEN_FILENAME=token.json
 ```
-
-#### Update a Record
-```python
-response = api.update_record(moduleName="Leads", id="record_id", data={"Last_Name": "Smith"}, token="your_access_token")
-print(response.json())
-```
-
-#### Partially Update a Record
-```python
-response = api.patch_record(moduleName="Leads", id="record_id", data={"First_Name": "John"}, token="your_access_token")
-print(response.json())
-```
-
-#### Delete a Record
-```python
-response = api.delete_record(moduleName="Leads", id="record_id", token="your_access_token")
-print(response.json())
-```
-
-#### Attach a File
-```python
-response = api.attach_file(moduleName="Leads", record_id="record_id", file_path="/path/to/file.pdf", token="your_access_token")
-print(response.json())
-```
-
-#### Fetch All Attachments
-```python
-response = api.fetch_file(moduleName="Leads", record_id="record_id", token="your_access_token")
-print(response.json())
-```
-
-#### Fetch a Specific File Attachment
-```python
-response = api.fetch_file(moduleName="Leads", record_id="record_id", file_id="file_id", token="your_access_token", fetch_all=False)
-with open("downloaded_file.pdf", "wb") as file:
-    file.write(response.content)
-```
-
 
 ## Token Management
 
-This package includes built-in support for managing tokens. Use the `TokenManager` utility to generate token initilizer.
+This package includes built-in support for managing tokens. Use the `TokenManager` utility to generate token initilizer.It handle refreshing token at regular interval to ensure the smooth functioning.
 
 ### Example
 
 ```python
-from pyzohocrm import TokenManager
+from pyzohobook import TokenManager
 
-token_instance = TokenManager(domain_name="Canada",
-                                            refresh_token="####.######.##################",
-                                            client_id="########.#######################",
-                                            client_secret="####################.#######################",
-                                            grant_type="refresh_token")
+token_instance = TokenManager()
 ```
 Use `get_access_token()` method on token instace to fetch the token
 
 ```
 token = token_instance.get_access_token()
 ```
+The method will return a refresh token that can be use to make API calls
 
-## Logging
+## Example Usage 💡
 
-ZOHOAPI uses Python's built-in `logging` module to log errors and API events. Customize logging levels as needed for your application.
-
+### Creating a Bill
 ```python
-import logging
-logging.basicConfig(level=logging.INFO)
+from pyzohobook import Bill
+
+response = Bill.create_bill(
+    bill_data={
+        "vendor_id": "30379000000678069",
+        "bill_number": "your bill number",
+        "line_items": [
+            {
+                "item_id": "30379000000680001"
+            }
+        ]
+    },
+    book_token=token,
+)
+
 ```
 
-## Contributing
+### Creating an Invoice
 
-Feel free to contribute by submitting issues or pull requests in the Git repository.
+```python
+from pyzohobook import Invoice
+
+response = Invoice.create_invoice(
+    invoice_data = {
+        "customer_id": "3545346464364",
+        "reference_number": "your reference number",
+        "line_items": [
+            {
+                "item_id": "30379000000680001"
+            }
+        ]},
+    book_token=token
+
+)
+
+```
+
+### Mark an Invoice
+
+```python
+from pyzohobook import Invoice
+
+response = Invoice.mark_invoice(
+    invoice_id="your invoice id",
+    book_token=token,
+    status="sent"
+)
+``` 
+
+### Search an Item
+
+```python
+from pyzohobook import Item
+
+response = Item.search_item(
+    item_name="MyItemName", 
+    book_token=token
+
+)
+```
+
+### Fetch an Invoice as a PDF
+
+```python
+from pyzohobook import Invoice
+
+response = Invoice.fetch_invoice(
+    invoice_id="your invoice id",
+    book_token=token,
+    formate="pdf"
+)
+```
+
+## Contributing 🤝
+
+While PyZohoBooks currently covers some key API functionalities, there are still many other Zoho Books API wrappers and endpoints that can be added to improve the library. Contributions are extremely welcome! If you encounter any issues, have new feature ideas, or want to implement additional API wrappers, please feel free to:
+
+1. Fork the repository
+2. Create a branch
+3. Implement the feature or fix the issue
+4. Submit a pull request with your changes
+
+Your contributions can help make this library even more powerful and flexible for everyone using Zoho Books to Automate there Business Using Python.
 
 ## License
 
