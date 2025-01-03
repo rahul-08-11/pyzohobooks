@@ -1,5 +1,8 @@
 # pyzohobook/bill.py
-from .utils.helpers import *
+from .helpers import *
+import json
+import requests
+from .config import Config
 
 
 class Bill:
@@ -56,7 +59,9 @@ class Bill:
         return response
 
     @classmethod
-    def update_bill(cls, bill_id: str, bill_data: dict, book_token: str) -> requests.Response:
+    def update_bill(
+        cls, bill_id: str, bill_data: dict, book_token: str
+    ) -> requests.Response:
         """
         Updates an existing bill in Zoho Books.
 

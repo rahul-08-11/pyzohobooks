@@ -1,6 +1,12 @@
-#pyzohobook/vendor.py
+# pyzohobook/vendor.py
 
-from .utils.helpers import *
+from .helpers import *
+import json
+import requests
+from urllib.parse import urlencode
+from .config import Config
+from typing import Literal
+
 
 class Vendor:
     """
@@ -16,12 +22,11 @@ class Vendor:
         search_vendor(search_params: dict, book_token: str) -> requests.Response:
             Searches for vendors using the Zoho Books API.
     """
+
     config = Config()
 
     @classmethod
-    def search_vendor(
-        cls, search_params: dict, book_token: str
-    ) -> requests.Response:
+    def search_vendor(cls, search_params: dict, book_token: str) -> requests.Response:
         """
         Searches for vendors using the Zoho Books API.
 

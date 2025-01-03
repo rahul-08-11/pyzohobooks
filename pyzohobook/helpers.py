@@ -1,9 +1,4 @@
 # utils/helpers.py
-import json
-import requests
-from urllib.parse import urlencode
-from pyzohobook.config import Config
-from typing import Literal
 
 
 def get_book_headers(book_token: str) -> dict:

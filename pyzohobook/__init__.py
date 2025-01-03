@@ -9,6 +9,4 @@ from .token_manager import TokenManager
 from .customer import Customer
 
 
-__all__ = ["Config","Bill", "Invoice", "Item", "Vendor", "TokenManager", "Customer"]
-
-
+__all__ = ["Config", "Bill", "Invoice", "Item", "Vendor", "TokenManager", "Customer"]
