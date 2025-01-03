@@ -3,7 +3,7 @@ from .utils import *
 import json
 import requests
 from urllib.parse import urlencode
-from .config import Config
+from . import config
 from typing import Literal
 
 
@@ -23,7 +23,7 @@ class Invoice:
         fetch_invoice: Fetches an invoice in Zoho Books.
     """
 
-    config = Config()
+    config = config.Config()
 
     @classmethod
     def create_invoice(cls, invoice_data: dict, book_token: str) -> requests.Response:

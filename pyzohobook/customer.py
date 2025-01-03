@@ -3,7 +3,7 @@ from .utils import *
 import json
 import requests
 from urllib.parse import urlencode
-from .config import Config
+from . import config
 from typing import Literal
 
 
@@ -15,7 +15,7 @@ class Customer:
         config (Config): An instance of the Config class, used to store configuration settings.
     """
 
-    config = Config()
+    config = config.Config()
 
     @classmethod
     def search_customer(cls, search_params: dict, book_token: str) -> requests.Response:

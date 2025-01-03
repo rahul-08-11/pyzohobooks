@@ -3,7 +3,7 @@ from .utils import *
 import json
 import requests
 from urllib.parse import urlencode
-from .config import Config
+from . import config
 from typing import Literal
 
 
@@ -12,7 +12,7 @@ class Item:
     A class representing an item, providing methods for creating, updating, searching, and deleting items.
     """
 
-    config = Config()
+    config = config.Config()
 
     @classmethod
     def create_item(

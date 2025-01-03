@@ -2,7 +2,7 @@
 from .utils import *
 import json
 import requests
-from .config import Config
+from . import config
 
 
 class Bill:
@@ -14,7 +14,7 @@ class Bill:
     """
 
     # Shared Config instance for accessing configuration details
-    config = Config()
+    config = config.Config()
 
     @classmethod
     def create_bill(cls, bill_data: dict, book_token: str) -> requests.Response:
