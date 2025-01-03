@@ -1,5 +1,6 @@
 import os
 
+
 class Config:
     """
     A singleton class for managing application configuration.
