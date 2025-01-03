@@ -12,7 +12,7 @@ class Bill:
     This class provides methods to create, delete, and update bills using the Zoho Books API.
     All operations use the shared `Config` instance for configuration values.
     """
-
+    
     # Shared Config instance for accessing configuration details
     config = config.Config()
 
