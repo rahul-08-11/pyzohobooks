@@ -2,7 +2,7 @@
 from .utils import *
 import json
 import requests
-from . import config
+from .config import Config
 
 
 class Bill:
@@ -12,9 +12,9 @@ class Bill:
     This class provides methods to create, delete, and update bills using the Zoho Books API.
     All operations use the shared `Config` instance for configuration values.
     """
-    
+
     # Shared Config instance for accessing configuration details
-    config = config.Config()
+    config = Config()
 
     @classmethod
     def create_bill(cls, bill_data: dict, book_token: str) -> requests.Response:

@@ -4,7 +4,7 @@ from .utils import *
 import json
 import requests
 from urllib.parse import urlencode
-from . import config
+from .config import Config
 from typing import Literal
 
 
@@ -23,7 +23,7 @@ class Vendor:
             Searches for vendors using the Zoho Books API.
     """
 
-    config = config.Config()
+    config = Config()
 
     @classmethod
     def search_vendor(cls, search_params: dict, book_token: str) -> requests.Response:

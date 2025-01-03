@@ -4,7 +4,7 @@ import json
 import requests
 from datetime import datetime, timedelta
 import os
-from . import config
+from .config import Config
 
 
 class TokenManager:
@@ -37,7 +37,7 @@ class TokenManager:
     _expiry = None
 
     def __init__(self) -> None:
-        self.config = config.Config()
+        self.config = Config()
         self._load_token_from_file()
 
     def _load_token_from_file(self) -> None:
