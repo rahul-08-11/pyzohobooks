@@ -1,4 +1,4 @@
-# utils/helpers.py
+# pyzohobook/utils.py
 
 
 def get_book_headers(book_token: str) -> dict:

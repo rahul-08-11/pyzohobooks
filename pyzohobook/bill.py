@@ -1,5 +1,5 @@
 # pyzohobook/bill.py
-from .helpers import *
+from .utils import *
 import json
 import requests
 from .config import Config
