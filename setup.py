@@ -9,7 +9,7 @@ setup(
     url="https://github.com/rahul-08-11/pyzohobooks",
     packages=find_packages(),
     install_requires=[
-        "requests"
+        "requests","python-dotenv"
         # List dependencies here (e.g., "numpy>=1.18.0")
     ],
     classifiers=[
