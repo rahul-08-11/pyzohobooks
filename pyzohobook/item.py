@@ -1,52 +1,95 @@
-#pyzohobook/item.py
-from .utils import *
-import json
-import requests
+# pyzohobook/item.py
+from .utils.helpers import *
 
+class Item:
+    """
+    A class representing an item, providing methods for creating, updating, searching, and deleting items.
+    """
 
-def create_item(
-    item_data: dict, book_token: str, organization_id: str
-) -> requests.Response:
-    response = requests.post(
-        f"https://www.zohoapis.ca/books/v3/items?organization_id={organization_id}",
-        headers=get_book_headers(book_token=book_token),
-        data=json.dumps(item_data),
-    )
-    return response
+    config = Config()
 
+    @classmethod
+    def create_item(
+        cls, item_data: dict, book_token: str, organization_id: str
+    ) -> requests.Response:
+        """
+        Creates a new item.
 
-def update_item(
-    item_id: str, item_data: dict, book_token: str, organization_id: str
-) -> requests.Response:
+        Args:
+            item_data (dict): The data for the new item.
+            book_token (str): The book token for authentication.
+            organization_id (str): The ID of the organization.
 
-    response = requests.put(
-        f"https://www.zohoapis.ca/books/v3/items/{item_id}?organization_id={organization_id}",
-        headers=get_book_headers(book_token=book_token),
-        data=json.dumps(item_data),
-    )
+        Returns:
+            requests.Response: The response from the API.
+        """
+        response = requests.post(
+            f"{cls.config.domain_url}/items?organization_id={cls.config.organization_id}",
+            headers=get_book_headers(book_token=book_token),
+            data=json.dumps(item_data),
+        )
+        return response
 
-    return response
+    @classmethod
+    def update_item(
+        cls, item_id: str, item_data: dict, book_token: str
+    ) -> requests.Response:
+        """
+        Updates an existing item.
 
+        Args:
+            item_id (str): The ID of the item to update.
+            item_data (dict): The updated data for the item.
+            book_token (str): The book token for authentication.
 
-def search_item(
-    item_name: dict, book_token: str, organization_id: str
-) -> requests.Response:
+        Returns:
+            requests.Response: The response from the API.
+        """
+        response = requests.put(
+            f"{cls.config.domain_url}/items/{item_id}?organization_id={cls.config.organization_id}",
+            headers=get_book_headers(book_token=book_token),
+            data=json.dumps(item_data),
+        )
+        return response
 
-    response = requests.get(
-        f"https://www.zohoapis.ca/books/v3/items?organization_id={organization_id}&name={item_name}",
-        headers=get_book_headers(book_token=book_token),
-    )
+    @classmethod
+    def search_item(
+        cls, item_name: dict, book_token: str, organization_id: str
+    ) -> requests.Response:
+        """
+        Searches for an item by name.
 
-    return response
+        Args:
+            item_name (dict): The name of the item to search for.
+            book_token (str): The book token for authentication.
+            organization_id (str): The ID of the organization.
 
+        Returns:
+            requests.Response: The response from the API.
+        """
+        response = requests.get(
+            f"{cls.config.domain_url}/items?organization_id={cls.config.organization_id}&name={item_name}",
+            headers=get_book_headers(book_token=book_token),
+        )
+        return response
 
-def delete_item(
-    item_id: str, book_token: str, organization_id: str
-) -> requests.Response:
+    @classmethod
+    def delete_item(
+        cls, item_id: str, book_token: str, organization_id: str
+    ) -> requests.Response:
+        """
+        Deletes an item.
 
-    response = requests.delete(
-        f"https://www.zohoapis.ca/books/v3/items/{item_id}?organization_id={organization_id}",
-        headers=get_book_headers(book_token=book_token),
-    )
+        Args:
+            item_id (str): The ID of the item to delete.
+            book_token (str): The book token for authentication.
+            organization_id (str): The ID of the organization.
 
-    return response
+        Returns:
+            requests.Response: The response from the API.
+        """
+        response = requests.delete(
+            f"{cls.config.domain_url}/items/{item_id}?organization_id={cls.config.organization_id}",
+            headers=get_book_headers(book_token=book_token),
+        )
+        return response
